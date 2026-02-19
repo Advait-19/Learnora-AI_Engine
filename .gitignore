@@ -24,6 +24,7 @@ frontend/.config/
 
 # Backend local data/models (too large for normal git)
 backend/models/
+models/
 
 # Optional local artifacts
 *.log
