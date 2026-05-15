@@ -1,8 +1,14 @@
 # Learnora — AI-Powered Personalized Learning Engine
 
+## Preview
+
 <p align="center">
-  <img src="assets/learnora-ui.png" width="850"/>
+  <img src="assets/learnora-ui.png" width="900"/>
 </p>
+
+---
+
+## Roadmap Generation
 
 <p align="center">
   <img src="assets/roadmap.png" width="45%"/>
