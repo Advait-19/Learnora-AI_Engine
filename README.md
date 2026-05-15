@@ -1,267 +1,179 @@
+# Learnora — AI-Powered Personalized Learning Engine
+
+Learnora is an AI-driven learning recommendation system that generates personalized learning roadmaps using semantic search, vector similarity retrieval, and metadata-driven ranking.
+
+Instead of relying on keyword matching, Learnora understands the semantic intent behind user queries and dynamically structures educational content into guided learning paths.
+
 ---
 
-# Learnora – AI-Powered Learning Assistant
+## Key Highlights
 
-Learnora is a semantic search–based AI learning assistant that generates personalized learning roadmaps using vector embeddings and metadata-driven structuring.
-
-It helps users discover relevant learning resources and organizes them into structured, easy-to-follow learning paths.
+- Semantic search using SentenceTransformers
+- Vector similarity retrieval with FAISS
+- Personalized roadmap generation
+- Metadata-driven ranking and filtering
+- Difficulty-aware learning progression
+- Real-time structured learning path generation
+- Hybrid AI pipeline combining NLP + retrieval systems
 
 ---
 
 ## Problem Statement
 
-Online learning platforms contain large volumes of content but lack structured personalization. Learners often:
+Modern learning platforms provide massive amounts of educational content but lack personalized structure.
 
-* Spend excessive time searching for relevant resources
-* Struggle to determine what to learn first
-* Cannot clearly differentiate beginner and advanced content
-* Lack a structured learning sequence
+Learners often struggle with:
+- discovering relevant resources
+- understanding prerequisite order
+- identifying beginner-friendly content
+- building structured learning paths
 
-Learnora addresses this by understanding user intent semantically and generating structured, personalized learning roadmaps dynamically.
-
----
-
-## How It Works
-
-### 1. User Query
-
-The user enters a learning question (for example: “How do I learn Machine Learning?”).
-
-The React frontend sends this query to the Flask backend through a REST API.
+Learnora addresses this by generating dynamic, intent-aware learning roadmaps tailored to the user's learning goals.
 
 ---
 
-### 2. Semantic Encoding
+## System Workflow
 
-The backend uses a fine-tuned SentenceTransformer model (`learnora_finetuned_stv2`) to convert the query into a high-dimensional embedding vector.
+### Query Understanding
+User queries are converted into semantic embeddings using a fine-tuned SentenceTransformer model.
 
-This embedding captures semantic meaning rather than relying on keyword matching.
+### Vector Retrieval
+Precomputed embeddings for 16,000+ learning resources are indexed using FAISS for fast similarity search.
 
----
+### Metadata-Based Ranking
+Retrieved resources are filtered and ranked using:
+- difficulty level
+- prerequisites
+- credibility score
+- content type
 
-### 3. Vector Similarity Search (FAISS)
+### Dynamic Roadmap Generation
+The backend generates:
+- ordered learning paths
+- categorized learning branches
+- prerequisite-aware progression
+- visual roadmap structures
 
-All 16,000+ learning resources are pre-encoded and stored in a FAISS index.
-
-The query embedding is compared against indexed vectors using cosine similarity.
-FAISS retrieves the top-k most semantically similar resources in milliseconds.
-
----
-
-### 4. Metadata Retrieval and Filtering
-
-Each resource includes structured metadata such as:
-
-* Title
-* Summary
-* Labels (topics)
-* Difficulty level
-* Prerequisites
-* Credibility score
-* Content type (video/article)
-
-The backend filters and ranks results based on:
-
-* Difficulty progression (Beginner → Advanced)
-* Credibility score
-* Prerequisite alignment
-* Content type grouping
-
----
-
-### 5. Roadmap Generation
-
-The backend dynamically generates:
-
-* A step-based learning roadmap
-* A fishbone-style visual roadmap
-* Categorized branches (Articles vs Videos)
-* Ordered progression based on prerequisites
-
-Each roadmap is generated in real time based on the user’s query.
-
----
-
-### 6. Frontend Rendering
-
-The structured roadmap JSON is returned to the React frontend and rendered in a chat-style interface.
-
-Users can:
-
-* View structured learning paths
-* Explore categorized resources
-* Open links directly
-* Track session history
+### Frontend Rendering
+Structured roadmap responses are rendered through a React-based chat interface.
 
 ---
 
 ## Tech Stack
 
-### Machine Learning
-
-* SentenceTransformers (fine-tuned embedding model)
-* FAISS (vector similarity search)
-* PyTorch
-* Hugging Face Transformers
+### AI / Machine Learning
+- SentenceTransformers
+- Hugging Face Transformers
+- FAISS
+- PyTorch
 
 ### Backend
-
-* Flask (REST API)
-* Python
-* JSON-based metadata storage
+- Python
+- Flask
+- REST APIs
 
 ### Frontend
+- React
+- React Router
 
-* React
-* React Router
-* LocalStorage for session persistence
-
-### Data Layer
-
-* `backend/datasets/learnora_metadata_final.json`
-* `backend/datasets/learnora_faiss_final.index`
+### Data & Infrastructure
+- JSON metadata pipelines
+- Vector indexing
+- Embedding preprocessing pipelines
 
 ---
 
-## System Architecture
+## Architecture
 
-User → React Frontend → Flask API → SentenceTransformer → FAISS Index → Metadata Filtering → Roadmap Generation → JSON Response → React UI
+```text
+User Query
+   ↓
+React Frontend
+   ↓
+Flask API
+   ↓
+SentenceTransformer Embedding
+   ↓
+FAISS Vector Search
+   ↓
+Metadata Filtering & Ranking
+   ↓
+Roadmap Generation
+   ↓
+Structured JSON Response
+   ↓
+Frontend Visualization
+```
 
 ---
 
-## Key Features
+## Core Features
 
-* Semantic search (meaning-based retrieval)
-* Vector similarity search using FAISS
-* Personalized roadmap generation
-* Fishbone-style visual learning paths
-* Difficulty and prerequisite-based sequencing
-* Chat-style interaction
+- Semantic learning resource retrieval
+- Personalized AI-generated learning paths
+- Difficulty-based sequencing
+- Prerequisite-aware recommendations
+- Chat-style interaction workflow
+- Categorized educational resource organization
 
 ---
 
-## Challenges Faced
+## Engineering Challenges Solved
 
-1. Training and scaling embeddings
-   OpenAI embeddings were initially used but became expensive at scale.
-   A locally fine-tuned SentenceTransformer improved semantic consistency and reduced recurring API costs.
+### Scaling Semantic Retrieval
+Migrated from API-based embeddings to a locally fine-tuned SentenceTransformer pipeline to reduce inference costs and improve semantic consistency.
 
-2. Large dataset processing
-   Encoding and indexing 16,000+ resources required batch processing and optimized FAISS indexing.
+### Large-Scale Vector Indexing
+Optimized FAISS indexing and embedding pipelines for efficient retrieval across 16,000+ resources.
 
-3. Roadmap structuring
-   Ensuring correct ordering by prerequisites and difficulty required additional metadata-driven logic.
+### Roadmap Structuring Logic
+Designed metadata-aware ranking logic for prerequisite alignment and progressive difficulty ordering.
+
+---
+
+## Project Structure
+
+```text
+frontend/
+backend/
+datasets/
+models/
+utils/
+```
 
 ---
 
 ## Local Setup
 
-### Prerequisites
-
-* Python 3.10+
-* Node.js 18+ and npm
-* Git
-
----
-
-### Clone Repository
-
 ```bash
-git clone https://github.com/Jesicawdgit/Recommendation-Engine.git
-cd Recommendation-Engine
-```
+# Clone repository
+git clone <repo-url>
 
----
-
-### Environment Variables
-
-Create local environment files (not committed to version control).
-
-#### frontend/.env
-
-```
-REACT_APP_AUTH0_DOMAIN=your-auth0-domain.us.auth0.com
-REACT_APP_AUTH0_CLIENT_ID=your_auth0_client_id
-```
-
-#### backend/.env (if required)
-
-```
-# OPENAI_API_KEY=your_openai_api_key
-# FLASK_ENV=development
-```
-
----
-
-### Run Backend (Port 5001)
-
-```bash
+# Backend setup
 cd backend
-python -m venv .venv
-```
-
-Activate virtual environment:
-
-**Windows**
-
-```bash
-.venv\Scripts\activate
-```
-
-**macOS/Linux**
-
-```bash
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
-```
 
-Start backend:
-
-```bash
-python app_alt_port.py
-```
-
-Health check:
-
-```
-http://localhost:5001/api/health
-```
-
----
-
-### Run Frontend
-
-Open a new terminal:
-
-```bash
+# Frontend setup
 cd frontend
 npm install
-npm run dev
 ```
 
-If `npm run dev` is not defined:
-
-```bash
-npm start
-```
+Run backend and frontend separately.
 
 ---
 
-### Run Order
+## Future Improvements
 
-1. Start backend (`python app_alt_port.py`)
-2. Start frontend (`npm run dev` or `npm start`)
-
----
-
-## Summary
-
-Learnora combines semantic search, vector similarity indexing, and metadata-driven generation to create personalized learning roadmaps. It bridges raw educational content and structured learning guidance by dynamically generating learning paths tailored to user intent.
+- Adaptive recommendation feedback loops
+- User-specific learning memory
+- LLM-assisted roadmap refinement
+- Multi-modal resource understanding
+- Graph-based prerequisite mapping
 
 ---
 
+## Author
+
+Advait Gupta
+
+AI/ML enthusiast focused on intelligent systems, semantic retrieval, recommendation systems, and personalized learning technologies.
