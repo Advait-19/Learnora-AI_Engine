@@ -1,5 +1,14 @@
 # Learnora — AI-Powered Personalized Learning Engine
 
+<p align="center">
+  <img src="assets/learnora-ui.png" width="850"/>
+</p>
+
+<p align="center">
+  <img src="assets/roadmap.png" width="45%"/>
+  <img src="assets/semantic-search.png" width="45%"/>
+</p>
+
 Learnora is an AI-driven learning recommendation system that generates personalized learning roadmaps using semantic search, vector similarity retrieval, and metadata-driven ranking.
 
 Instead of relying on keyword matching, Learnora understands the semantic intent behind user queries and dynamically structures educational content into guided learning paths.
